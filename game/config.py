@@ -1,0 +1,16 @@
+TITTLE = 'Mi juego !!'
+
+WIDTH = 1000
+HEIGHT = 600
+
+BLUE = (25,100,150)
+RED = (255,0,0)
+WHITE = (255,255,255)
+
+MAX_BALLONS = 5
+
+
+GRAV = 0.07
+
+FONT = 'Arial'
+
