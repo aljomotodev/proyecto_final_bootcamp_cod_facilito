@@ -14,6 +14,7 @@ Archivos:
 - ballons.py
 - file_admin.py
 - score.txt
+- feliz.py
 
 se debe instalar la libreria pygame, correr el juego desde el archivo main, las techas para jugar son: 
 	a: izquierda
@@ -25,3 +26,5 @@ el jugador deberá tocar los globos para obtener puntos, si el globo toca los pi
 el juego finaliza al cerrar la ventana(presionar x), en caso que el puntaje sea mayor al anterior el mismo se guardará en 
 el archivo score.txt
 durante el juego, si superá el score anterior, aparecerá imagen de felicitación
+
+Para ejecutar el juego deberá abrir la terminal y ejecutar comando: python main.py
