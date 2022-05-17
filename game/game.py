@@ -1,10 +1,11 @@
 import sys
-import pygame
+import pygame, time
 from .config import *
 from .pinchos import *
 from .player import *
 from .ballons import *
 from .file_admin import *
+from .feliz import *
 
 class Game:
 	def __init__(self):
@@ -34,22 +35,26 @@ class Game:
 	def generate_elements(self):
 		self.pincho = Pincho()
 		self.codi = Player()
-		# self.ballon = Ballon()
+		self.feliz = Feliz()
 
 		self.sprites = pygame.sprite.Group()
 		self.ballons = pygame.sprite.Group()
 
 		self.sprites.add(self.pincho)
 		self.sprites.add(self.codi)
-		# self.sprites.add(self.ballon)
 
 		self.generate_ballons()
 
+	def generate_prize(self):
+		last_score = int(self.file.readFile())
+		if self.score_actual > last_score:
+			self.sprites.add(self.feliz)
+
+
 	def generate_ballons(self):
 
-		if len(self.ballons) < MAX_BALLONS: #si no existen ballons
+		if len(self.ballons) < MAX_BALLONS: #si ballons es menor a la cant.max de ballons
 
-			# for b in range(0,MAX_BALLONS):
 			ballon = Ballon()
 			self.sprites.add(ballon)
 			self.ballons.add(ballon)
@@ -88,9 +93,8 @@ class Game:
 	def draw(self):
 		self.surface.fill(BLUE)
 
-		self.draw_text()
-
 		self.sprites.draw(self.surface)
+		self.draw_text()
 
 	def update(self):
 		pygame.display.flip()
@@ -102,6 +106,10 @@ class Game:
 			ballon.kill()
 			self.generate_ballons()
 			self.score_actual += 1
+
+			if ( self.score_actual > int(self.file.readFile()) ):
+				self.generate_prize()
+
 
 		ballon_pincho = self.pincho.collide_with(self.ballons)
 		if ballon_pincho:
@@ -116,8 +124,6 @@ class Game:
 		if self.score_actual > last_score:
 			self.file.writeFile(str(self.score_actual))
 
-		
-
 	def display_text(self, text, size, color, pos_x, pos_y):
 		font = pygame.font.Font(self.font, size)
 
@@ -131,8 +137,5 @@ class Game:
 		self.display_text('Last Score: ' + self.file.readFile(), 36, WHITE, 100, 80)
 		self.display_text('Actual Score: ' + str(self.score_actual), 36, WHITE, 100, 120)
 
-		
 
 
-
-	
